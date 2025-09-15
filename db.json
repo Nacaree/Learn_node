@@ -25,5 +25,42 @@
       "name": "Alice Smith",
       "email": "alice@example.com"
     }
+  ],
+  "products": [
+    {
+      "pid": 1,
+      "name": "Smartphone",
+      "price": 699.99,
+      "description": "A powerful and sleek smartphone.",
+      "createdAt": "2025-09-15T15:00:00.000Z"
+    },
+    {
+      "pid": 2,
+      "name": "Laptop",
+      "price": 1200.00,
+      "description": "A high-performance laptop for professionals.",
+      "createdAt": "2025-09-15T15:05:00.000Z"
+    },
+    {
+      "pid": 3,
+      "name": "Wireless Headphones",
+      "price": 199.50,
+      "description": "Noise-cancelling headphones with long battery life.",
+      "createdAt": "2025-09-15T15:10:00.000Z"
+    },
+    {
+      "pid": 4,
+      "name": "Smartwatch",
+      "price": 250.00,
+      "description": "A watch that tracks your fitness and notifications.",
+      "createdAt": "2025-09-15T15:15:00.000Z"
+    },
+    {
+      "pid": 5,
+      "name": "gy",
+      "price": 250.00,
+      "description": "A watch that tracks your fitness and notifications.",
+      "createdAt": "2025-09-15T15:15:00.000Z"
+    }
   ]
 }

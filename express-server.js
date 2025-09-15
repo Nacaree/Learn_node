@@ -30,14 +30,32 @@ app.get("/users/:id", (req, res) => {
   //   res.send(`You requested data for user ID: ${userId}`);
 });
 
-app.get("/api/users", async (req, res) => {
+app.get("/api/products", async (req, res) => {
   try {
     const data = await fs.readFile("db.json", "utf8");
-    const users = JSON.parse(data).users;
-    res.json(users);
+    const products = JSON.parse(data).products;
+    res.json(products);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error reading users" });
+    res.status(500).json({ message: "Error reading products" });
+  }
+});
+// GET: Read a single product by pid
+app.get("/api/products/:pid", async (req, res) => {
+  try {
+    const data = await fs.readFile("db.json", "utf8");
+    const products = JSON.parse(data).products;
+    const pid = parseInt(req.params.pid, 10);
+
+    const product = products.find((p) => p.pid === pid);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Error reading product" });
   }
 });
 
@@ -158,7 +176,7 @@ app.patch("/api/users/:id", async (req, res) => {
     // Save the updated users array back to the file
     await fs.writeFile("db.json", JSON.stringify({ users }, null, 2), "utf8");
     res.json({ message: "User updated successfully", user: updatedUser });
-  } catch (error) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error updating users" });
   }
