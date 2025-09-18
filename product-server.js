@@ -1,47 +1,20 @@
 const express = require("express");
-const app = express();
-const fs = require("fs").promises;
+const mysql = require("mysql2");
 const db = require("./db");
+const app = express();
+const port = 3000; // Changed port to 3000
 
 app.use(express.json());
-const port = 3307;
 
 // GET: Read all products
-app.get("/", async (req, res) => {
-  try {
-    db.query("SELECT * FROM tbl_product"),
-      (err, products) => {
-        if (err) {
-          return res.status(500).send("Database error");
-        }
-      };
-    // const data = await fs.readFile("db.json", "utf8");
-    // const products = JSON.parse(data).products;
-    res.json(products);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "can't get products" });
-  }
-});
-
-// GET: Read a single product by pid
-app.get("/api/products/:pid", async (req, res) => {
-  try {
-    const data = await fs.readFile("db.json", "utf8");
-    const products = JSON.parse(data).products;
-    const pid = parseInt(req.params.pid, 10);
-
-    const product = products.find((p) => p.pid === pid);
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+app.get("/api/products", (req, res) => {
+  db.query("SELECT * FROM tbl_product", (err, products) => {
+    if (err) {
+      console.error("Database query error:", err);
+      return res.status(500).json({ message: "Error fetching products" });
     }
-
-    res.json(product);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error reading product" });
-  }
+    res.json(products);
+  });
 });
 
 app.listen(port, () => {
